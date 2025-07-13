@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>🎮 Steam Stats Tracker</h1>
+
+  <!-- Komponent wyszukiwania użytkownika -->
+  <app-user-search (statsHistoryLoaded)="onUserStatsHistoryLoaded($event)"></app-user-search>
+
+  <!-- Wykres użytkownika -->
+  <app-stats-chart [statsHistory]="selectedUserStatsHistory"></app-stats-chart>
+
+  <hr />
+
+  <!-- Widok porównania użytkowników -->
+  <app-compare-view (compareStatsLoaded)="onCompareUsersLoaded($event)"></app-compare-view>
+</div>

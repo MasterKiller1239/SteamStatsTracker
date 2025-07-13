@@ -1,0 +1,6 @@
+<input [(ngModel)]="steamId1" placeholder="Steam ID 1" />
+<input [(ngModel)]="steamId2" placeholder="Steam ID 2" />
+<button (click)="compare()">Compare</button>
+
+<app-stats-chart [history]="history1"></app-stats-chart>
+<app-stats-chart [history]="history2"></app-stats-chart>

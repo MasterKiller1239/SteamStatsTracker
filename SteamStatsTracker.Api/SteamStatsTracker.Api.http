@@ -1,0 +1,6 @@
+@SteamStatsTracker.Api_HostAddress = http://localhost:5166
+
+GET {{SteamStatsTracker.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
