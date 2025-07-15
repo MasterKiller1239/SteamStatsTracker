@@ -20,24 +20,7 @@ public class SteamApiClient : ISteamApiClient
 
     public async Task<SteamUserStatsDto?> GetUserStatsAsync(string steamIdOrVanityUrl)
     {
-        string steamId = steamIdOrVanityUrl;
-
-        // Jeśli steamId nie wygląda na liczbowy SteamID64 – próbujemy rozwiązać vanityURL
-        if (!ulong.TryParse(steamIdOrVanityUrl, out _))
-        {
-            var vanityUrl = $"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={_apiKey}&vanityurl={steamIdOrVanityUrl}";
-            var vanityResponse = await _httpClient.GetFromJsonAsync<JsonDocument>(vanityUrl);
-            var resolved = vanityResponse?.RootElement.GetProperty("response");
-
-            if (resolved?.GetProperty("success").GetInt32() == 1)
-            {
-                steamId = resolved?.GetProperty("steamid").GetString();
-            }
-            else
-            {
-                return null;
-            }
-        }
+      var steamId = await GetUserSteamIDAsync(steamIdOrVanityUrl);
 
         var stats = new SteamUserStatsDto
         {
@@ -91,4 +74,21 @@ public class SteamApiClient : ISteamApiClient
         return stats;
     }
 
+    public async Task<string> GetUserSteamIDAsync(string vanityUrlOrSteamId)
+    {
+        string steamId = vanityUrlOrSteamId;
+
+        if (!ulong.TryParse(vanityUrlOrSteamId, out _))
+        {
+            var vanityUrl = $"https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key={_apiKey}&vanityurl={vanityUrlOrSteamId}";
+            var vanityResponse = await _httpClient.GetFromJsonAsync<JsonDocument>(vanityUrl);
+            var resolved = vanityResponse?.RootElement.GetProperty("response");
+
+            if (resolved?.GetProperty("success").GetInt32() == 1)
+            {
+                steamId = resolved?.GetProperty("steamid").GetString();
+            }
+        }
+        return steamId;
+    }
 }

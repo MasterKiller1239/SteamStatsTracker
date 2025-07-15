@@ -45,6 +45,7 @@ namespace SteamStatsTracker.Application.Services
 
         public async Task<List<SteamUserStatsDto>> GetStatsHistoryAsync(string steamId)
         {
+            steamId = _steamApiClient.GetUserSteamIDAsync(steamId).Result;
             var history = await _statsRepository.GetStatsHistoryAsync(steamId);
 
             return history.Select(s => new SteamUserStatsDto

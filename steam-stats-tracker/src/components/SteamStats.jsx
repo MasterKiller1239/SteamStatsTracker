@@ -4,15 +4,15 @@ const SteamStats = ({ stats }) => {
   if (!stats) return null;
 
   return (
-    <div className="p-4 bg-white dark:bg-gray-800 rounded shadow mt-4">
-      <h2 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Current Stats</h2>
-      <ul className="list-disc ml-6 text-gray-800 dark:text-gray-200">
-        <li>Steam ID: {stats.steamId}</li>
-        <li>Date Collected: {new Date(stats.dateCollected).toLocaleString()}</li>
-        <li>Total Games: {stats.totalGames}</li>
-        <li>Playtime (hrs): {(stats.playtimeForever / 60).toFixed(1)}</li>
-        <li>Steam Level: {stats.steamLevel}</li>
-        <li>Badges: {stats.badgeCount}</li>
+    <div className="p-6 bg-[#1b2838] text-white rounded shadow mt-4">
+      <h2 className="text-2xl font-bold mb-4 text-[#66c0f4]">Aktualne Statystyki</h2>
+      <ul className="space-y-2 text-lg">
+        <li><strong>Steam ID:</strong> {stats.steamId}</li>
+        <li><strong>Data pobrania:</strong> {new Date(stats.dateCollected).toLocaleString()}</li>
+        <li><strong>Gier ogółem:</strong> {stats.totalGames}</li>
+        <li><strong>Czas gry (h):</strong> {(stats.playtimeForever).toFixed(1)}</li>
+        <li><strong>Poziom Steam:</strong> {stats.steamLevel}</li>
+        <li><strong>Odznaki:</strong> {stats.badgeCount}</li>
       </ul>
     </div>
   );

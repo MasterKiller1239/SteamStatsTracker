@@ -5,4 +5,5 @@ namespace SteamStatsTracker.Application.Interfaces;
 public interface ISteamApiClient
 {
     Task<SteamUserStatsDto> GetUserStatsAsync(string steamId);
+    Task<string> GetUserSteamIDAsync(string vanityUrlOrSteamId);
 }

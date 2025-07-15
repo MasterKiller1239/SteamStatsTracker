@@ -43,6 +43,7 @@ const App = () => {
       const statsData = await fetchSteamStats(steamId);
       setStats(statsData);
       const historyData = await fetchSteamStatsHistory(steamId);
+      console.log('Fetched history:', historyData);
       setHistory(historyData);
     } catch (error) {
       console.error('Błąd pobierania danych:', error);
@@ -52,46 +53,52 @@ const App = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-8">
-      <h1 className="text-2xl font-bold text-center mb-4">Steam Stats Tracker</h1>
+    <div className="min-h-screen bg-[#171a21] text-white font-sans p-4">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-8 text-[#66c0f4]">
+          Steam Stats Tracker
+        </h1>
 
-      {!isAuthenticated ? (
-        <div className="mb-6 text-center">
-          <input
-            className="border px-2 py-1 mr-2"
-            placeholder="Login"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            className="border px-2 py-1 mr-2"
-            placeholder="Hasło"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button
-            onClick={handleLogin}
-            className="bg-blue-500 text-white px-3 py-1 rounded"
-          >
-            Zaloguj
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="mb-4 text-right">
+        {!isAuthenticated ? (
+          <div className="mb-10 text-center bg-[#1b2838] p-6 rounded shadow-lg">
+            <input
+              className="bg-[#2a475e] text-white border-none px-3 py-2 mr-2 rounded focus:outline-none"
+              placeholder="Login"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              className="bg-[#2a475e] text-white border-none px-3 py-2 mr-2 rounded focus:outline-none"
+              placeholder="Hasło"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
             <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-3 py-1 rounded"
+              onClick={handleLogin}
+              className="bg-[#66c0f4] text-black px-4 py-2 rounded hover:bg-[#417a9b]"
             >
-              Wyloguj
+              Zaloguj
             </button>
           </div>
-          <SteamSearch onSearch={handleSearch} />
-          <SteamStats stats={stats} />
-          <SteamStatsHistory history={history} />
-        </>
-      )}
+        ) : (
+          <>
+            <div className="mb-6 text-right">
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 hover:bg-red-800 text-white px-4 py-2 rounded"
+              >
+                Wyloguj
+              </button>
+            </div>
+            <div className="bg-[#1b2838] p-6 rounded shadow-lg">
+              <SteamSearch onSearch={handleSearch} />
+              <SteamStats stats={stats} />
+              <SteamStatsHistory history={history} />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };
